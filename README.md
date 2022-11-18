@@ -1,1 +1,1 @@
-ArgoCD  
+ArgoCD-
