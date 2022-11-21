@@ -1,1 +1,1 @@
-- Argo - 
+# Self Managed Argo CD 
