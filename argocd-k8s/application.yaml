@@ -1,0 +1,65 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/sezersanlikan/argocd.git
+    path: argocd-install/argo-cd
+    targetRevision: HEAD
+    helm:
+      version: v3
+      valueFiles:
+      - values.yaml
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-apps
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/sezersanlikan/argocd.git
+    path: argocd-apps
+    targetRevision: HEAD
+    directory:
+      recurse: true
+      jsonnet: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-appprojects
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/sezersanlikan/argocd.git
+    path: argocd-appprojects
+    targetRevision: HEAD
+    directory:
+      recurse: true
+      jsonnet: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
