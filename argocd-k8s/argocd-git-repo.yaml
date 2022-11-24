@@ -7,3 +7,5 @@ metadata:
     argocd.argoproj.io/secret-type: repository
 stringData:
   url: https://github.com/sezersanlikan/argocd.git
+  name: argocd-github
+  type: git
